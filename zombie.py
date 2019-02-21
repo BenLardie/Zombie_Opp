@@ -9,13 +9,22 @@ class Zombie:
     default_speed = 1
     default_strength = 3
 
-    def __init__(self, speed):
+    def __init__(self, speed, strength):
         """Initializes zombie's speed
+            Initializes zombie's strength
         """
         if speed > Zombie.max_speed:
             self.speed = Zombie.default_speed
         else:
             self.speed = speed
+
+        if strength > Zombie.max_strength:
+            self.strength = Zombie.default_strength
+        else:
+            self.strength = strength
+
+    def __str__(self):
+        return "The zombies speed level is {} and his strength level is {}!".format(self.max_speed, self.max_strength)
 
     @classmethod
     def spawn(cls):
@@ -38,6 +47,7 @@ class Zombie:
         """
         Zombie.spawn()
         Zombie.some_die_off()
+        Zombie.increase_plague_level()
 
     @classmethod
     def some_die_off(cls):
@@ -50,18 +60,30 @@ class Zombie:
             Zombie.horde.pop(random_zombie)
             counter += 1
 
+    @classmethod
+    def increase_plague_level(cls):
+        """ a class method that increases the plague level"""
+        number = random.randint(0,2)
+        Zombie.plague_level += number
+
     def encounter(self):
         """This instance method represents you coming across a zombie! This can end in two possible outcomes:
         1. You outrun the zombie and escape unscathed!
         2. You don't outrun the zombie. It eats your brains and you die. :(
         Returns a summary of what happened.
+        3. You beat Zombie in fight but now you are a zombie
         """
         outrun = self.chase()
+        karate = self.fight()
 
         if outrun:
             return 'You escaped!'
+        elif karate:
+            you_zombie = Zombie(random.randint(1, Zombie.max_speed),random.randint(1, Zombie.max_strength))
+            Zombie.horde.append(you_zombie)
+            return "Whoa you fight like Elvis, nice job! Unfortunately your a Zombie."
         else:
-            return 'You died.'
+            return "Dead like dinner"
 
     def chase(self):
         """Represents you trying to outrun this particular zombie.
@@ -69,3 +91,16 @@ class Zombie:
         """
         your_speed = random.randint(1, Zombie.max_speed)
         return your_speed > self.speed
+
+    def fight(self):
+        """An instance method about fighting a zombie"""
+
+        your_strength = random.randint(1, Zombie.max_strength)
+        return your_strength > self.strength
+
+
+thanos = Zombie(5, 10)
+coolguy = Zombie(4, 5)
+print(Zombie.encounter(thanos))
+print(Zombie.encounter(thanos))
+print(Zombie.encounter(coolguy))
