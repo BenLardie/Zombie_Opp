@@ -36,7 +36,8 @@ class Zombie:
 
         while count < new_zombies:
             speed = random.randint(1, Zombie.max_speed)
-            Zombie.horde.append(Zombie(speed))
+            strength = random.randint(1, Zombie.max_strength)
+            Zombie.horde.append(Zombie(speed, strength))
             count += 1
 
     @classmethod
@@ -99,8 +100,18 @@ class Zombie:
         return your_strength > self.strength
 
 
-thanos = Zombie(5, 10)
-coolguy = Zombie(4, 5)
-print(Zombie.encounter(thanos))
-print(Zombie.encounter(thanos))
-print(Zombie.encounter(coolguy))
+print(Zombie.horde)
+Zombie.new_day()
+print(Zombie.horde)
+zombie1 = Zombie.horde[0]
+print(zombie1)
+zombie2 = Zombie.horde[1]
+print(zombie2)
+print(zombie1.encounter())
+print(zombie2.encounter())
+Zombie.new_day()
+print(Zombie.horde)
+zombie1 = Zombie.horde[0]
+zombie2 = Zombie.horde[1]
+print(zombie1.encounter())
+print(zombie2.encounter())
